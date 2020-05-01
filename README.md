@@ -64,8 +64,3 @@ def get(key):
     else:
         return None
 ```
-
-
-
-
-
