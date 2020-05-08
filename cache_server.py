@@ -1,5 +1,6 @@
 import sys
 import socket
+import json
 
 from server_config import NODES
 from pickle_hash import deserialize, hash_code_hex
@@ -14,8 +15,12 @@ class MyDict(dict):
         self[key] = value
         return key
 
+    def delete(self, key):
+        del self[key]
+        return 'success'
+
 class UDPServer():
-    def __init__(self, host, port):
+    def __init__(self, host, port):g
         self.host = host
         self.port = int(port)
         self.db = MyDict()
@@ -35,10 +40,11 @@ class UDPServer():
 
     def handle_operation(self, operation, key, value):
         if operation == 'GET':
-            # TODO: PART I - implement GET retrieval from self.db.xxxxx
-            return 'FIX_ME'.encode()
+            return self.db.get(key)
         elif operation == 'PUT':
             return self.db.put(key, value)
+        elif operation == 'DELETE':
+            return self.db.delete(key)
         else:
             print(f'Error: Invalid operation={operation}')
             return 'Not supported operation={}'.format(operation)
@@ -55,6 +61,8 @@ class UDPServer():
             # reply back to the client
             if isinstance(response, str):
                 response = response.encode()
+            elif isinstance(response, dict):
+                response = json.dumps(response).encode()
 
             s.sendto(response, ip)
 
