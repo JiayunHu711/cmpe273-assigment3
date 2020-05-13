@@ -2,8 +2,8 @@
 https://en.wikipedia.org/wiki/Bloom_filter#Probability_of_false_positives
 
 assume p = 0.05, n = 1,000,000
-m = - (n * log(p)) / (log(2)^2) = 6.2352242 × 10^6
-k = (m/n)*log(2) = 4.32
+- m = - (n * log(p)) / (log(2)^2) = 6.2352242 × 10^6
+- k = (m/n)*log(2) = 4.32
 
 Increasing the number of hash functions (𝑘) has two effects:
 1. increases the likelihood of false positives
